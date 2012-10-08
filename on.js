@@ -88,6 +88,12 @@ define([
 			//		on.group.pause('MyGroupId');
 			//
 
+			if(!target){
+				console.error('no target passed to dx-alias/on for event', event);
+				console.trace();
+				return null;
+			}
+
 			if(typeof target == 'string' && target[0] === '/'){
 				return topic.sub(target, event, ctx, scope, group);
 			}
@@ -121,8 +127,8 @@ define([
 				// an object, not a node
 				var paused = 0;
 				handle = aspect.after(target, event, function(){
-					if(paused) return;
-					if(_once) handle.remove();
+					if(paused) { return; }
+					if(_once) { handle.remove(); }
 					fn.apply(null, arguments);
 				}, true);
 				handle.once = function(){
@@ -130,11 +136,11 @@ define([
 				};
 				handle.pause = function(){
 					paused = 1;
-				}
+				};
 				handle.resume = function(){
 					paused = 0;
-				}
-				if(group) addGroup(group, handle);
+				};
+				if(group) { addGroup(group, handle); }
 				return handle;
 			}
 

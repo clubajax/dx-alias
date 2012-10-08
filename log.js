@@ -43,7 +43,7 @@ define(function(){
 			window.dojoConfig = {};
 		}
 
-		var dbg = window.debug || dojoConfig.debug || /debug=true/.test(document.location.href) || false;
+		var dbg = window.debug || dojoConfig.debug || dojoConfig.isDebug || /debug=true/.test(document.location.href) || false;
 		dojoConfig.loglimit = dojoConfig.loglimit || 299;
 		var count = dojoConfig.loglimit;
 

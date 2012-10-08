@@ -34,7 +34,7 @@ define([
 	//			dom.byId: dom.byId;
 	//			dom.destroy: dom-construct.destroy;
 	//			dom.prop = dom-prop.set or dom-prop.get;
-	// 		extras:
+	//		extras:
 	//			dom.center: none (TODO)
 	//			dom.fit: none (TODOC)
 	//			dom.byTag: none
@@ -106,9 +106,9 @@ define([
 			}
 
 			n = domCon.create(tag, atts, node, place);
-			if(attStyle) domStyle.set(n, attStyle);
-			if(attSelectable !== undefined) domDom.setSelectable(n, attSelectable);
-			if(attValue !== undefined) n.value = attValue; // need this?
+			if(attStyle) { domStyle.set(n, attStyle); }
+			if(attSelectable !== undefined){  domDom.setSelectable(n, attSelectable); }
+			if(attValue !== undefined){  n.value = attValue; } // need this?
 			if(attOn){
 				for(nm in attOn){
 					on(n, nm, attOn[nm]);
@@ -185,7 +185,7 @@ define([
 		//		to use than dojo.query which would be overkill for this task.
 		//	returns: Array (NOT HTMLDOMCollection)
 		//
-		if(!tag) return null;
+		if(!tag) { return null; }
 		if(node === true){
 			returnFirstOnly = true;
 			node = document; // just document?
@@ -194,8 +194,8 @@ define([
 		}
 		//console.log(' --- byTag:', tag, node);
 		var list = node.getElementsByTagName(tag);
-		if(!list || !list.length) return [];
-		if(returnFirstOnly) return list[0];
+		if(!list || !list.length) { return []; }
+		if(returnFirstOnly) { return list[0]; }
 
 		// slice() failed in IE8 on HTML5 nodes.
 		var a = [];
@@ -208,16 +208,16 @@ define([
 
 	dom.show = function(/*DOMNode|Array*/node, /*String|Boolean?*/opt){
 		// summary:
-		// 		Show a previously hidden node. Defaults to display:block
-		// 	node:DOMNode|Array
-		// 		The node to show. If an array, it should be an array of nodes to
-		// 		show.
-		// 	opt:String|Boolean?
-		// 		Options. If a string, it is assumed to be the display type, such
-		// 		as inline-block, or table-cell. If a Boolean, the node will be
-		// 		shown or hidden - so that the display can be toggled. Note this
-		// 		would only work for display:block. Other display types will have
-		// 		to have a different toggle mechanism.
+		//		Show a previously hidden node. Defaults to display:block
+		//	node:DOMNode|Array
+		//		The node to show. If an array, it should be an array of nodes to
+		//		show.
+		//	opt:String|Boolean?
+		//		Options. If a string, it is assumed to be the display type, such
+		//		as inline-block, or table-cell. If a Boolean, the node will be
+		//		shown or hidden - so that the display can be toggled. Note this
+		//		would only work for display:block. Other display types will have
+		//		to have a different toggle mechanism.
 		//
 		if(node && node instanceof Array){
 			node.forEach(function(n){
@@ -257,9 +257,9 @@ define([
 		//	returns: Object
 		//		Returns an object with width and height (w and h);
 		//
-		// 		TODO: allow options to ask for margin, padding, border
-		// 		TODO: optionally ask for position
-		// 		TODO: See if there is a way to cache computedStyle for perf
+		//		TODO: allow options to ask for margin, padding, border
+		//		TODO: optionally ask for position
+		//		TODO: See if there is a way to cache computedStyle for perf
 		//
 
 		if(node === window){
@@ -308,8 +308,8 @@ define([
 		//		Shortcut to dom-style.set and get
 		//		Uses the Dojo pre 1.7 way of setting and getting a style.
 		//
-		if(value === undefined && typeof prop === 'string') return domStyle.get(node, prop);
-		if(value === undefined) return domStyle.set(node, prop);
+		if(value === undefined && typeof prop === 'string') { return domStyle.get(node, prop); }
+		if(value === undefined) { return domStyle.set(node, prop); }
 		return domStyle.set(node, prop, value);
 	};
 
@@ -337,9 +337,9 @@ define([
 		//	summary:
 		//		Shortcut to dom-prop.set and get
 		//		Uses the Dojo pre 1.7 way of setting and getting a node attribute.
-		if(value === undefined && typeof prop === 'string') return domProp.get(node, prop);
+		if(value === undefined && typeof prop === 'string') { return domProp.get(node, prop); }
 		if(value === undefined){
-			for(var nm in prop) domProp.set(node, nm, prop[nm]);
+			for(var nm in prop) { domProp.set(node, nm, prop[nm]); }
 			return null;
 		}
 		return domStyle.set(node, prop, value);
