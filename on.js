@@ -98,7 +98,7 @@ define([
 				return topic.sub(target, event, ctx, scope, group);
 			}
 
-			if(typeof event == 'object'){
+			if(typeof event == 'object' && !obj.widgetId){
 				return on.multi(target, event, ctx, scope);
 			}
 

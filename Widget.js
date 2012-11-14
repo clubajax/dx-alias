@@ -5,8 +5,9 @@ define([
 	'dijit/_TemplatedMixin',
 	'dx-alias/dom',
 	'dx-alias/string',
-	'dx-alias/on'
-],function(declare, registry, _WidgetBase, _TemplatedMixin, dom, string, on){
+	'dx-alias/on',
+	'dx-alias/lang'
+],function(declare, registry, _WidgetBase, _TemplatedMixin, dom, string, on, lang){
 	//	summary:
 	//		Widget is not very complicated, it's a shortcut for the most common
 	//		Dijit creation modules, _WidgetBase, and _TemplatedMixin.
@@ -18,38 +19,41 @@ define([
 		showing: true,
 
 		show: function(){
-			if(this.showing) return;
+			if(this.showing) { return; }
 			this.showing = true;
 			dom.show(this.domNode);
 		},
 
 		hide: function(){
-			if(!this.showing) return;
+			if(!this.showing) { return; }
 			this.showing = false;
 			dom.hide(this.domNode);
 		},
 
 		getName: function(){
+			// TODO: declaredClass is deprecated
 			return string.last(this.declaredClass, '.');
 		},
 
 		getParent: function(){
 			// summary:
 			//		Returns the parent widget of this widget
-			//console.log('getParent', this.domNode)
 			if(!this.domNode.parentNode){
-				console.warn('NO PARENT', this)
+				// FIXIT: triggered by common.resizeAll
+				//console.warn('NO PARENT');
 				return null;
 			}
 			return this._parent || registry.getEnclosingWidget(this.domNode.parentNode) || registry.getEnclosingWidget(this.domNode.parentNode.parentNode);
 		},
 
+		// TODO: Should children methods move to another class?
+		// TODO: Doc why these are different
 		addChildren: function(widgets, node){
 			//console.log('addChildren', widgets)
 			widgets.forEach(function(w){
 				//console.log('addChild', w);
 				this.addChild(w, node);
-			}, this)
+			}, this);
 		},
 
 		addChild: function(widget, node){
@@ -57,7 +61,7 @@ define([
 			widget._parent = this;
 			node = node || this.containerNode || this.domNode;
 			node.appendChild(widget.domNode);
-			if(this._started && !widget._started) widget.startup();
+			if(this._started && !widget._started) { widget.startup(); }
 			return widget;
 		},
 
@@ -79,13 +83,22 @@ define([
 			this._connections.forEach(function(handle){ handle.pause(); }, this);
 		},
 
-		getObject: function(obj){
+		getObject: function(/*Object|String*/obj){
+			//	summary
+			//		Gets an object via this.obj, this[obj] or registry[obj]
 			return typeof obj == 'string' ? typeof this[obj] == 'object' ? this[obj] : registry.byId(obj) : obj;
 		},
 
 		on: function(obj, event, ctx, method){
 			this._connections = this._connections || [];
-			var h = on(obj, event, ctx, method);
+			var h;
+			if(typeof obj === 'string'){
+				// emit'd event
+				h = on(this, obj, lang.bind(event, ctx));
+			}else{
+				h = on(obj, event, ctx, method);
+			}
+
 			this._connections.push(h);
 			return h;
 		},

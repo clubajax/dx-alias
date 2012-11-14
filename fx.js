@@ -8,7 +8,7 @@ define([
 	//		A module designed to contain unique effects. the only useful method
 	//		is "flyout"; otherwise this is under development.
 	//
-	var log = logger('FX', 0);
+	var log = logger('FX', 1);
 	var fx = {
 
 		flyout: function(/*DOMNode*/btnNode, /*DOMNode*/displayNode, /*Object*/options){
@@ -45,15 +45,16 @@ define([
 					dom.hide(displayNode);
 				}
 
-			}
+			};
 			var showIt = function(){
 				showing = true;
 				if(!!options.onShow){
 					options.onShow();
 				}else{
+					log('SHOWIT');
 					dom.show(displayNode);
 				}
-			}
+			};
 
 			if(onover){
 				on(displayNode, "mouseover", function(){
@@ -64,7 +65,7 @@ define([
 
 				on(displayNode, "mouseout", function(){
 					displayNodeIsOver = false;
-					if(btnIsOver) return;
+					if(btnIsOver) { return; }
 					tmr = setTimeout(function(){ hideIt(displayNode); }, 500);
 				});
 
@@ -77,7 +78,7 @@ define([
 
 				on(btnNode, "mouseout", function(){
 					btnIsOver = false;
-					if(displayNodeIsOver) return;
+					if(displayNodeIsOver) { return; }
 					tmr = setTimeout(function(){ hideIt(displayNode); }, 500);
 
 				});
@@ -94,9 +95,9 @@ define([
 
 				on.multi(btnNode, {
 					"click":function(){
-						log('BTN CLK', displayNodeIsOver, showing)
+						log('BTN CLK', displayNodeIsOver, showing);
 						btnIsOver = true;
-						if(displayNodeIsOver) return;
+						if(displayNodeIsOver) { return; }
 						if(showing){
 							hideIt();
 						}else{
@@ -134,13 +135,13 @@ define([
 			switch(type){
 				case 'fade':
 					show = function(){
-						log('show fade')
+						log('show fade');
 						dom.style(node, 'opacity', 1);
 					};
 					hide = function(){
 						dom.style(node, 'opacity', 0);
 					};
-					if(options.hidden) hide();
+					if(options.hidden) { hide(); }
 					setTimeout(function(){
 						dom.style(node, transition+"Property", 'opacity');
 						dom.style(node, transition+"Duration", duration+"ms");
@@ -148,13 +149,13 @@ define([
 					break;
 				case 'ie':
 					show = function(){
-						log('show ie')
+						log('show ie');
 						dom.style(node, 'display', 'block');
 					};
 					hide = function(){
 						dom.style(node, 'display', 'none');
 					};
-					if(options.hidden) hide();
+					if(options.hidden) { hide(); }
 					break;
 			}
 
@@ -167,7 +168,7 @@ define([
 					log('trans fade hide');
 					hide();
 				}
-			}
+			};
 		}
 	};
 

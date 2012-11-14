@@ -12,7 +12,7 @@ define([
 		_uidMap = {},
 		uid = function(str){
 			str = str || "id";
-			if(!_uidMap[str]) _uidMap[str] = 0;
+			if(!_uidMap[str]){  _uidMap[str] = 0; }
 			_uidMap[str]++;
 			return str+"_"+_uidMap[str];
 
@@ -22,13 +22,13 @@ define([
 			if(typeof(func) == "string"){
 				if(!func){ func = ctx; ctx = window; }
 				return function(){
-					ctx[func].apply(ctx, arguments); }
+					ctx[func].apply(ctx, arguments); };
 			}else{
 				var method = !!func ? ctx.func || func : ctx;
 				var scope = !!func ? ctx : window;
-				return function(){ method.apply(scope, arguments); }
+				return function(){ method.apply(scope, arguments); };
 			}
-		}
+		};
 
 	return {
 
@@ -49,8 +49,8 @@ define([
 			bind,
 
 		last: function(/*Array*/array){
-			// 	summary:
-			// 		Returns the last element of an array.
+			//	summary:
+			//		Returns the last element of an array.
 			return array[array.length -1];
 		},
 
@@ -60,9 +60,9 @@ define([
 			var o1 = {};
 			for(var nm in o){
 				if(typeof(o[nm]) == "object"){
-					o1[nm] = this.copy(o[nm])
+					o1[nm] = this.copy(o[nm]);
 				}else{
-					o1[nm] = o[nm]
+					o1[nm] = o[nm];
 				}
 			}
 			return o1;
@@ -82,17 +82,17 @@ define([
 		mix: function(/*Object*/source1, /*Object|Array*/source2, /*Object?*/opt){
 			//	summary:
 			//		Mixes two objects together.
-			// 		Warning: not deep!
-			// 		source1: Object
-			// 			Object to add properties and methods
-			// 		source2: Object|Array
-			// 			Object to get properties and methods from. If an array
-			// 			it is looped and mixed in order.
-			// 		opt: Object
-			// 			copy
-			// 				Make a copy of source1 before mixing
-			// 			notUndefined
-			// 				Don't mix properties if undefined in source1
+			//		Warning: not deep!
+			//		source1: Object
+			//			Object to add properties and methods
+			//		source2: Object|Array
+			//			Object to get properties and methods from. If an array
+			//			it is looped and mixed in order.
+			//		opt: Object
+			//			copy
+			//				Make a copy of source1 before mixing
+			//			notUndefined
+			//				Don't mix properties if undefined in source1
 			opt = opt || {};
 			if(opt.copy) source1 = this.copy(source1);
 			var notUndefined = opt.notUndefined;
@@ -134,14 +134,14 @@ define([
 
 		timeCode: function(/*Number*/pos, /*String?*/format){
 			// summary:
-			// 		Converts a number into timecode, formatted as per the format
-			// 		option.
-			// 	NOTE:
-			// 		This may get moved to a date module (if more date methods
-			// 		are needed)
+			//		Converts a number into timecode, formatted as per the format
+			//		option.
+			//	NOTE:
+			//		This may get moved to a date module (if more date methods
+			//		are needed)
 			//
+			var tc, hh, mm, ss, mmss = ".0";
 			if (!isNaN(pos)){
-				var tc, hh, mm, ss, mmss = ".0";
 				if (Math.floor(pos) != pos){
 					mmss = (((pos - Math.floor(pos)).toString()).substring(1, 3));
 					pos = Math.floor(pos);

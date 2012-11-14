@@ -13,8 +13,8 @@ define(function(){
 	//
 	//		Fixes some of the annoyances with the IE8 console:
 	//			-	clears the logs on reload
-	//			- 	adds spaces between logged arguments
-	//			- 	adds stubs for Firebug commands
+	//			-	adds spaces between logged arguments
+	//			-	adds stubs for Firebug commands
 	//		Fixes WebKit Mobile Debuggers:
 	//			- concatenates all arguments into a string to get
 	//				around the one argument-logged silliness.
@@ -38,6 +38,7 @@ define(function(){
 	// uncommented for dev
 	//window.dojoConfig = { debug:1 };
 
+	console.log('no errs')
 	var fixConsole = function(){
 		if(window.dojoConfig === undefined){
 			window.dojoConfig = {};
@@ -56,7 +57,7 @@ define(function(){
 
 			var loaded = false;
 
-			if(!/Firefox/.test(ua)) window.console = {};
+			if(!/Firefox/.test(ua)) { window.console = {}; }
 			var c = window.console;
 
 			var node;
@@ -68,7 +69,8 @@ define(function(){
 					args:args
 				});
 
-			}
+			};
+
 			var flush = function(){
 				list.forEach(function(o){
 					var div = document.createElement('div');
@@ -77,20 +79,20 @@ define(function(){
 					node.appendChild(div);
 				});
 				list = [];
-			}
+			};
 
 			common.split(",").forEach(function(n){
 				(function(){
 					var type = n;
 					c[n] = function(){
 						cache(type, Array.prototype.slice.call(arguments).join(" "));
-					}
+					};
 				})();
 
 			});
 
 			more.split(",").forEach(function(n){
-				c[n] = function(){}
+				c[n] = function(){};
 			});
 
 
@@ -104,14 +106,14 @@ define(function(){
 					clearInterval(h1);
 					ready();
 					setInterval(function(){
-						if(list.length) flush();
+						if(list.length) { flush(); }
 					}, 100);
 				}
 			}, 100);
 		}
 
 		if(!window.console) {
-			console = {};
+			window.console = {};
 			dbg = false;
 		}
 
@@ -149,18 +151,18 @@ define(function(){
 			console.log = console.debug = console.info = console.warn = console.error = function(){
 				var a = [];
 				for(var i=0;i<arguments.length;i++){
-					a.push(arguments[i])
+					a.push(arguments[i]);
 				}
 				console._log(a.join(" "));
-			}
-		}
+			};
+		};
 
 		var hideCalls = function(str){
 			var calls = str.split(",");
 			for(var i=0;i<calls.length;i++){
 				console[calls[i]] = function(){};
 			}
-		}
+		};
 
 
 		if(dbg && /Trident/.test(ua)){
@@ -172,7 +174,7 @@ define(function(){
 			hideCalls(more+","+common);
 		}
 		//console.log("test log")
-	}
+	};
 
 	fixConsole();
 
@@ -187,7 +189,7 @@ define(function(){
 
 	return function(name, enabled){
 		var r = new RegExp(name);
-		if(!r.test(hash) && (enabled === false || enabled === 0)) return function(){};
+		if(!r.test(hash) && (enabled === false || enabled === 0)) { return function(){}; }
 		return function(){
 			var args = Array.prototype.slice.call(arguments);
 			args.forEach(function(a,i){
@@ -195,7 +197,7 @@ define(function(){
 					args[i]=a.tagName.toLowerCase()+"#"+a.id;
 				}
 			}, this);
-			if(name) args.unshift(" ["+name+"] ");
+			if(name) { args.unshift(" ["+name+"] "); }
 			logit(args);
 		};
 	};

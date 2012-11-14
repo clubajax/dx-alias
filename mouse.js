@@ -20,24 +20,24 @@ define([
 	//		attached. The mouse object contains:
 	//		x/y: Float
 	//			The mouse pos on the node
-	// 		cx/cy: Float
-	// 			The mouse pos on the node, constrained to not
-	// 			be less than zero or greater than the width/height
-	// 		px/py: Float
-	// 			Percentage of x/y position across width/height of node
-	// 		org: Object
-	// 			Contains an x/y, which is always the original position of
-	// 			the mousedown point.
-	// 		dist: Object
-	// 			Contains an x/y, which is the current distance from the
-	// 			*original* point.
-	// 		last: Object
-	// 			Contains an x/y, which is the current distance from the
-	// 			*last* point.
+	//		cx/cy: Float
+	//			The mouse pos on the node, constrained to not
+	//			be less than zero or greater than the width/height
+	//		px/py: Float
+	//			Percentage of x/y position across width/height of node
+	//		org: Object
+	//			Contains an x/y, which is always the original position of
+	//			the mousedown point.
+	//		dist: Object
+	//			Contains an x/y, which is the current distance from the
+	//			*original* point.
+	//		last: Object
+	//			Contains an x/y, which is the current distance from the
+	//			*last* point.
 	//		type:String
 	//			The type of event: zoom, down, up, move, dblclick, or click.
-	// 		scale:Float
-	// 			The amount of scale indicated by the touch gesture
+	//		scale:Float
+	//			The amount of scale indicated by the touch gesture
 	//		zoom:Boolean (or bit)
 	//			A falsey switch of whether the touch event indicates a scale or
 	//			zooming motion; from two fingers moving away from each other.
@@ -52,14 +52,14 @@ define([
 	//		dblclick:Boolean (or bit)
 	//			A falsey switch of whether a double-click was detected.
 	//	usage:
-	//		| 	mouse.track(this.node, this, 'onMouse');
-	//		| 	onMouse: function(evt){
+	//		|	mouse.track(this.node, this, 'onMouse');
+	//		|	onMouse: function(evt){
 	//		|		console.log(evt.mouse.dist.x);
 	//		|	}
 	//
 	// TODO:
-	// 		handle scroll
-	// 		track "drag" and "move" seperately.
+	//		handle scroll
+	//		track "drag" and "move" seperately.
 	//
 
 	var log = logger('MSE', 0);
@@ -83,7 +83,7 @@ define([
 			this.init();
 
 			on(this.node, 'scroll', function(evt){
-				log('scroll', evt.scroll.x, evt.scroll.y)
+				log('scroll', evt.scroll.x, evt.scroll.y);
 			});
 
 			this.handle = {
@@ -167,7 +167,7 @@ define([
 					dblclick:type=='dblclick'
 				};
 
-				if(type == 'move') last = { x:x, y:y };
+				if(type == 'move') { last = { x:x, y:y }; }
 
 				this.callback(evt);
 			},
@@ -210,8 +210,8 @@ define([
 
 			},
 			onGestureStart: function(evt){},
-			onGestureEnd: 	function(evt){},
-			onGesture:	 	function(evt){
+			onGestureEnd: function(evt){},
+			onGesture: function(evt){
 				this.onEvent(evt, 'zoom');
 			}
 		};
