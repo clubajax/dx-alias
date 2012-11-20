@@ -63,7 +63,7 @@ define([
 
 		groups = {},
 		addGroup = function(groupId, handle){
-			if(!groups[groupId]) groups[groupId] = [];
+			if(!groups[groupId]) { groups[groupId] = []; }
 			groups[groupId].push(handle);
 		},
 
@@ -159,13 +159,13 @@ define([
 			// on-mouseleave, mouseenter
 
 			handle = dojoOn.pausable(target, event, function(){
-				if(_once) handle.remove();
+				if(_once) { handle.remove(); }
 				fn.apply(null, arguments);
 			});
 			handle.once = function(){
 				_once = 1;
 			};
-			if(group) addGroup(group, handle);
+			if(group) { addGroup(group, handle); }
 			return handle;
 		};
 
@@ -174,11 +174,11 @@ define([
 			//		A way of making multiple connections with one call.
 			//	note:
 			//		If context is used, all methods will bind to it.
-			// 	example
-			// 		|	on.multi(node, {
-			// 		|		'mousedown':'onMouseDown',
-			// 		|		'mouseup':this.onMouseUp
-			// 		|	}, this);
+			//	example
+			//		|	on.multi(node, {
+			//		|		'mousedown':'onMouseDown',
+			//		|		'mouseup':this.onMouseUp
+			//		|	}, this);
 			//
 			var listeners = [];
 			ctx = ctx || null;
@@ -216,18 +216,18 @@ define([
 			//		magic arguments!!
 			//
 			var fn = lang.bind(ctx, method);
-			var passArg = arg;
+			//var passArg = arg;
 			var tmr, offHandle, downHandle;
 			var tch = 0; //bv.supports.touch();
 			var fire = function(evt){
 				tmr = setInterval(function(){
 					fn(evt);
 				}, 20);
-			}
+			};
 			var stop = function(evt){
 				offHandle.pause();
 				clearInterval(tmr);
-			}
+			};
 			downHandle = on(node, tch ? "touchstart" : "mousedown", function(evt){
 				on.stopEvent(evt);
 				offHandle.resume();
@@ -239,7 +239,7 @@ define([
 			});
 			stop();
 
-			if(group) addGroup(group, downHandle);
+			if(group) { addGroup(group, downHandle); }
 
 			return downHandle;
 		};
@@ -275,7 +275,7 @@ define([
 
 		on.stopEvent = function(evt){
 			evt = evt || window.event;
-			if(!evt) return false;
+			if(!evt) { return false; }
 			if(evt.preventDefault){
 				evt.preventDefault();
 				evt.stopPropagation();

@@ -6,8 +6,9 @@ define([
 	'dx-alias/dom',
 	'dx-alias/string',
 	'dx-alias/on',
+	'dojo/on',
 	'dx-alias/lang'
-],function(declare, registry, _WidgetBase, _TemplatedMixin, dom, string, on, lang){
+],function(declare, registry, _WidgetBase, _TemplatedMixin, dom, string, on, dojoOn, lang){
 	//	summary:
 	//		Widget is not very complicated, it's a shortcut for the most common
 	//		Dijit creation modules, _WidgetBase, and _TemplatedMixin.
@@ -17,6 +18,24 @@ define([
 		templateString:'<div></div>', //to be overwritten
 
 		showing: true,
+
+		postCreate: function(){
+			setTimeout(lang.hitch(this, function(){
+				if(!this._started){
+					console.warn('widget not started:', this.getName());
+				}
+			}), 500);
+			this.inherited(arguments);
+		},
+
+		startup: function(){
+			//console.log('start me up', this.getName(), this._started);
+			if(this._started){
+				return;
+			}
+			this._started = 1;
+			this.inherited(arguments);
+		},
 
 		show: function(){
 			if(this.showing) { return; }
@@ -89,18 +108,16 @@ define([
 			return typeof obj == 'string' ? typeof this[obj] == 'object' ? this[obj] : registry.byId(obj) : obj;
 		},
 
-		on: function(obj, event, ctx, method){
-			this._connections = this._connections || [];
-			var h;
-			if(typeof obj === 'string'){
-				// emit'd event
-				h = on(this, obj, lang.bind(event, ctx));
-			}else{
-				h = on(obj, event, ctx, method);
+		on: function(event, ctx, method){
+			//if(this.id == 'video') console.info('     on', event, this.domNode);
+			if(typeof event == 'object'){
+				console.trace();
 			}
-
-			this._connections.push(h);
-			return h;
+			method = !!method ? lang.bind(ctx, method) : ctx;
+			var signal = this.own(dojoOn(this.domNode, event, method));
+			this._connections = this._connections || [];
+			this._connections.push(signal);
+			return signal;
 		},
 
 		sub: function(/*String*/channel, /*Object|Function*/ctx, /*String|Function*/method, /*String?*/group){
@@ -111,7 +128,6 @@ define([
 		},
 
 		// add sub() ?
-
 		destroy: function(){
 			if(this._connections){
 				this._connections.forEach(function(h){

@@ -196,7 +196,7 @@ define([
 				this.onEvent(evt, 'move');
 			},
 			onEnd: function(evt){
-				if(!this.started) return; // iphone sends cancel without click
+				if(!this.started) { return; } // iphone sends cancel without click
 				this.started = 0;
 				log('end', evt);
 				this.mHandle.pause();
@@ -243,13 +243,13 @@ define([
 
 				this.getPos = function(evt, type){
 					// on touchend, there are no targetTouches
-					if (type=='zoom' || evt.targetTouches.length < 1) return last;
+					if (type=='zoom' || evt.targetTouches.length < 1) { return last; }
 
 					return {
 						x:evt.targetTouches[0].clientX,
 						y:evt.targetTouches[0].clientY
 					};
-				}
+				};
 			};
 
 		}else{
