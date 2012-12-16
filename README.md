@@ -132,3 +132,15 @@ topic.sub.multi({
 	'/on/hide':this.oHide
 }, this);
 ```
+
+Dependencies
+------------
+
+dx-alias replies upon Dojo and Dijit base and dx-timer.
+
+License
+-------
+
+dx-alias is available via Academic Free License >= 2.1 OR the
+modified BSD license. see: [http://dojotoolkit.org/license]
+(http://bugs.dojotoolkit.org/browser/dojo/trunk/LICENSE) for details
