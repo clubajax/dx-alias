@@ -110,7 +110,11 @@ define([
 				_once = 0;
 			if(typeof ctx == 'function'){
 				fn = ctx;
-				group = scope;
+				if(typeof scope === 'object'){
+					ctx = scope;	
+				}else{
+					group = scope;
+				}
 			}else if(typeof ctx == 'string'){
 				group = scope;
 				scope = ctx;

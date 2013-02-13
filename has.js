@@ -46,16 +46,16 @@ define([
 		return testcss('transform');
 	});
 
-	has.add('transitionevent', function(){
-			// don't know if testing for an event is very reliable. Sniff!
-			if(has('opera')){
-				return "OTransitionEnd";
-			}else if(has('ff')){
-				return "transitionend";
-			}else if(has('webkit')){
-				return "webkitTransitionEnd"; // small w? wTF!
-			}
-			return false;
+	has.add('transitionend', function(){
+		// don't know if testing for an event is very reliable. Sniff!
+		if(has('opera')){
+			return "OTransitionEnd";
+		}else if(has('ff')){
+			return "transitionend";
+		}else if(has('webkit')){
+			return "webkitTransitionEnd"; // small w? wTF!
+		}
+		return false;
 	});
 
 	has.add('mp4', function(){

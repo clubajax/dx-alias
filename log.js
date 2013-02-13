@@ -38,7 +38,6 @@ define(function(){
 	// uncommented for dev
 	//window.dojoConfig = { debug:1 };
 
-	console.log('no errs')
 	var fixConsole = function(){
 		if(window.dojoConfig === undefined){
 			window.dojoConfig = {};

@@ -109,6 +109,18 @@ define([
 			}
 			return source1;
 		},
+		
+		trim: function(/*String*/str){
+			// summary:
+			// 		Everyone knows what this is.
+			// 	NOTE:
+			// 		This is a duplicate of dx-alias/string/trim
+			return !str ?
+				str :
+				str.trim ?
+					str.trim() :
+					str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+		},
 
 		clamp: function(/*Number*/num, /*Number*/n1, /*Number*/n2){
 			//	summary:

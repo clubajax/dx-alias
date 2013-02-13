@@ -3,6 +3,9 @@ define([], function(){
 	//		Not an alias to any Dojo modules (except trim). This contains all
 	//		unique functionality.
 	//
+	
+	var subRegExp = /\$\{([^\}]+)\}/g;
+	
 	return {
 
 		urlToObj: function(/*String?*/url){
@@ -134,6 +137,20 @@ define([], function(){
 			// 		of it. :(
 			return encodeURI(this.trim(str).replace(" ", "+"));
 			//encodeURIComponent
+		},
+		
+		replace: function(message, keyOrMap){
+			//	summary:
+			//		Replaces ${...} with keyOrMap
+			//	message:
+			//		The string to have elements replaced
+			//	keyOrMap:
+			//		If a string, the elements will be replaced with this.
+			//		If an object, ${...} should correspond to a key in the object
+			return message.replace(subRegExp, function(match){
+				if(typeof keyOrMap === 'string') return keyOrMap;
+				return keyOrMap[match];
+			});
 		}
 	};
 });
