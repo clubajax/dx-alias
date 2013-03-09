@@ -28,6 +28,9 @@ define([
 	dom.css = domClass;
 	dom.style = domStyle;
 	dom.prop = domProp;
+	
+	// Note:
+	// dom.prop.set fails on setting data props
 	if(!dom.prop.remove){
 		dom.prop.remove = function(node, name){
 			domDom.byId(node).removeAttribute(name);
