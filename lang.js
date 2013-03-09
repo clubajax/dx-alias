@@ -78,6 +78,28 @@ define([
 			for(var nm in o) return false;
 			return true;
 		},
+		
+		toArray: function( obj ){
+			//	summary:
+			//		Convert object, such as arguments object or NodeCollection,
+			//		to an Array
+			if(! obj ){ return []; }
+			return Array.prototype.slice.call( obj );
+		},
+		
+		each: function( obj, callback, context ){
+			//	summary:
+			//		Loops through an object, like Array.forEach
+			
+			var
+				key,
+				fn = context ? bind( context, callback ) : callback;
+			for( key in obj ){
+				if( obj.hasOwnProperty( key )){
+					fn( obj[key], key, obj );
+				}
+			}
+		},
 
 		mix: function(/*Object*/source1, /*Object|Array*/source2, /*Object?*/opt){
 			//	summary:
