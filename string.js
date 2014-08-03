@@ -4,10 +4,17 @@ define([], function(){
 	//		unique functionality.
 	//
 	
-	var subRegExp = /\$\{([^\}]+)\}/g;
+	//var subRegExp = /\$\{([^\}]+)\}/g;
 	
 	return {
-
+		cap: function(word){
+			return word.substring(0,1).toUpperCase() + word.substring(1, word.length);
+		},
+		
+		pad: function(num){
+			return num < 10 ? '0' + num : num;
+		},
+		
 		urlToObj: function(/*String?*/url){
 			//	summary:
 			//		Converts an URL into an object.
